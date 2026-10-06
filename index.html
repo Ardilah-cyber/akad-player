@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payung Teduh - Akad (Now Playing)</title>
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #1e293b;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid #334155;
+        }
+        .header {
+            border: 1px solid #38bdf8;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            color: #38bdf8;
+            margin-bottom: 20px;
+            border-radius: 6px;
+        }
+        .history { color: #94a3b8; font-size: 0.9em; margin-bottom: 12px; }
+        .active { color: #facc15; font-weight: bold; font-size: 1.1em; border-top: 1px dashed #475569; border-bottom: 1px dashed #475569; padding: 8px 0; margin: 12px 0; }
+        button {
+            background: #0284c7; color: white; border: none; padding: 10px 20px;
+            border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin-bottom: 16px;
+        }
+        button:hover { background: #0369a1; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">🎶 PAYUNG TEDUH - AKAD (NOW PLAYING)</div>
+    <button id="btn-play">▶️ Putar Lirik</button>
+    <div id="history" class="history"></div>
+    <div id="active" class="active">Klik tombol untuk memutar...</div>
+    <div id="status" style="color: #4ade80; margin-top: 12px;"></div>
+</div>
+
+<script type="py">
+import asyncio
+from pyscript import document
+
+lirik_pilihan = [
+    "Bila nanti saatnya tlah tiba",
+    "ku ingin kau menjadi isriku",
+    "berjalan bersamamu dalam terik dan hujan",
+    "berlarian kesana kemari dan tertawa",
+    "Namun, bila saat berpisah t'lah tiba",
+    "Izinkan ku menjaga dirimu",
+    "Berdua menikmati pelukan di ujung waktu",
+    "Sudilah kau temani diriku",
+]
+
+async def play_lyrics(event):
+    history_el = document.querySelector("#history")
+    active_el = document.querySelector("#active")
+    status_el = document.querySelector("#status")
+    
+    history_el.innerHTML = ""
+    status_el.innerHTML = ""
+    riwayat = []
+
+    for baris in lirik_pilihan:
+        if riwayat:
+            history_el.innerHTML = "<br>".join([f"[✓] {item}" for item in riwayat])
+        
+        active_el.innerHTML = f"►▶ {baris.upper()}"
+        riwayat.append(baris)
+        await asyncio.sleep(4.5)
+    
+    status_el.innerHTML = "✨ Selesai memutar cuplikan lirik."
+
+document.querySelector("#btn-play").onclick = play_lyrics
+</script>
+
+</body>
+</html>
